@@ -23,6 +23,8 @@
                 </li>
                 <li><a class="${param.childMenu == 'Designation' ? 'active' : ''}" href="${contextPath}/designation">Designation</a>
                 </li>
+                <li><a class="${param.childMenu == 'Shifts' ? 'active' : ''}" href="${contextPath}/shift">Shift</a>
+                </li>
             </ul>
         </li>
     </ul>
