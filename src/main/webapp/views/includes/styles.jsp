@@ -16,3 +16,4 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/metisMenu.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/style1.css"/>
 <link rel="stylesheet" href="${contextPath}/resources/vendors/themefy_icon/themify-icons.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css">

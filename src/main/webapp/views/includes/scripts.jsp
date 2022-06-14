@@ -28,3 +28,8 @@
 <script src="${contextPath}/resources/vendors/apex_chart/apex_chart_list.js"></script>
 <!--for dialogs -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="${contextPath}/resources/js/custom/dateUtils.js"></script>
+<script src="${contextPath}/resources/js/moment.min.js"></script>
+

@@ -3,7 +3,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <nav class="sidebar active_sidebar">
     <div class="logo d-flex justify-content-between">
-        <a href="${contextPath}"><img src="${contextPath}/resources/img/logo.png" alt=""></a>
+        <a href="${contextPath}"><img src="${contextPath}/resources/img/logo.jpeg" alt=""></a>
         <div class="sidebar_close_icon d-lg-none">
             <i class="ti-close"></i>
         </div>
@@ -26,6 +26,9 @@
                 <li><a class="${param.childMenu == 'Shifts' ? 'mm-active' : ''}" href="${contextPath}/shift">Shift</a>
                 </li>
                 <li><a class="${param.childMenu == 'Rule' ? 'mm-active' : ''}" href="${contextPath}/rule">Rule</a>
+                </li>
+                <li><a class="${param.childMenu == 'Holidays' ? 'mm-active' : ''}"
+                       href="${contextPath}/holiday">Holiday</a>
                 </li>
             </ul>
         </li>
