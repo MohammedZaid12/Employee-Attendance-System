@@ -19,11 +19,13 @@
                 <span>Master Files</span>
             </a>
             <ul class="mm-collapse">
-                <li><a class="${param.childMenu == 'Departments' ? 'active' : ''}" href="${contextPath}/department">Departments</a>
+                <li><a class="${param.childMenu == 'Departments' ? 'mm-active' : ''}" href="${contextPath}/department">Departments</a>
                 </li>
-                <li><a class="${param.childMenu == 'Designation' ? 'active' : ''}" href="${contextPath}/designation">Designation</a>
+                <li><a class="${param.childMenu == 'Designation' ? 'mm-active' : ''}" href="${contextPath}/designation">Designation</a>
                 </li>
-                <li><a class="${param.childMenu == 'Shifts' ? 'active' : ''}" href="${contextPath}/shift">Shift</a>
+                <li><a class="${param.childMenu == 'Shifts' ? 'mm-active' : ''}" href="${contextPath}/shift">Shift</a>
+                </li>
+                <li><a class="${param.childMenu == 'Rule' ? 'mm-active' : ''}" href="${contextPath}/rule">Rule</a>
                 </li>
             </ul>
         </li>

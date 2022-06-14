@@ -3,10 +3,17 @@ package com.company.employeeattendance.controllers;
 import com.company.employeeattendance.dtos.RuleDto;
 import com.company.employeeattendance.entities.Rule;
 import com.company.employeeattendance.services.RuleService;
+import com.company.employeeattendance.utils.DateUtils;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@Service
+@Controller
+@RequestMapping(value = "/rule")
 public class RuleController extends BaseController<Rule, RuleDto> {
     private final RuleService ruleService;
 
@@ -17,24 +24,32 @@ public class RuleController extends BaseController<Rule, RuleDto> {
     @Override
     public String findAll(Model model) throws Exception {
         model.addAttribute("rules", ruleService.findAll());
-        return null;
+        model.addAttribute("daysOfWeek", DateUtils.getDaysOfWeek());
+        return "rule/list-rule";
     }
 
     @Override
     public String findAllActive(Model model) throws Exception {
         model.addAttribute("rules", ruleService.findAllActive());
-        return null;
+        model.addAttribute("daysOfWeek", DateUtils.getDaysOfWeek());
+        return "rule/list-rule";
+    }
+
+    @GetMapping(value = "/add")
+    public String addRule(Model model) {
+        model.addAttribute("ruleDto", new RuleDto());
+        return "rule/add-rule";
     }
 
     @Override
-    public String getById(Integer id, Model model) {
-        model.addAttribute("rule", ruleService.findById(id));
-        return null;
+    public String getById(@PathVariable Integer id, Model model) {
+        model.addAttribute("ruleDto", ruleService.findByIdDto(id));
+        return "rule/edit-rule";
     }
 
     @Override
-    public String saveOrUpdate(RuleDto ruleDto, Model model) {
+    public String saveOrUpdate(@ModelAttribute("ruleDto") RuleDto ruleDto, Model model) {
         ruleService.saveByDto(ruleDto);
-        return null;
+        return "redirect:/rule";
     }
 }

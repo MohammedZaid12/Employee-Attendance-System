@@ -33,7 +33,9 @@ public class RuleServiceImpl implements RuleService {
 
     @Override
     public RuleDto findByIdDto(Integer id) {
-        return null;
+        RuleDto ruleDto = new RuleDto();
+        BeanUtils.copyProperties(findById(id), ruleDto);
+        return ruleDto;
     }
 
     @Override
@@ -44,6 +46,7 @@ public class RuleServiceImpl implements RuleService {
     @Override
     public RuleDto saveByDto(RuleDto ruleDto) {
         Rule rule = ruleDto.getId() == null ? new Rule() : findById(ruleDto.getId());
+        rule.setCurrentUser();
         BeanUtils.copyProperties(ruleDto, rule);
         Rule saved = save(rule);
         ruleDto.setId(saved.getId());
