@@ -1,17 +1,24 @@
 package com.company.employeeattendance.dtos.employee;
 
-import com.company.employeeattendance.dtos.UserDto;
+import com.company.employeeattendance.entities.Designation;
+import com.company.employeeattendance.entities.Rule;
+import com.company.employeeattendance.entities.Shift;
+import com.company.employeeattendance.entities.User;
 import com.company.employeeattendance.enums.Religion;
 
 import java.sql.Date;
 
 public class EmployeeDto {
     private Integer id;
-    private UserDto user;
+    private User user;
     private Date joinDate;
     private Religion religion;
     private Double initialSalary;
     private Double currentSalary;
+
+    private Designation designation;
+    private Shift shift;
+    private Rule rule;
 
     public Integer getId() {
         return id;
@@ -21,11 +28,11 @@ public class EmployeeDto {
         this.id = id;
     }
 
-    public UserDto getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserDto user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -59,5 +66,29 @@ public class EmployeeDto {
 
     public void setCurrentSalary(Double currentSalary) {
         this.currentSalary = currentSalary;
+    }
+
+    public Designation getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(Designation designation) {
+        this.designation = designation;
+    }
+
+    public Shift getShift() {
+        return shift;
+    }
+
+    public void setShift(Shift shift) {
+        this.shift = shift;
+    }
+
+    public Rule getRule() {
+        return rule;
+    }
+
+    public void setRule(Rule rule) {
+        this.rule = rule;
     }
 }

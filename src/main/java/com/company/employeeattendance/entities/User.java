@@ -48,6 +48,9 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+    @Transient
+    private String fullName;
+
     public Integer getId() {
         return id;
     }
@@ -144,4 +147,11 @@ public class User extends BaseEntity {
         this.birthDate = birthDate;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 }

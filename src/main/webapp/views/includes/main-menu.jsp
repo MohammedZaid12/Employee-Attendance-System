@@ -10,7 +10,7 @@
     </div>
     <ul id="sidebar_menu" class="metismenu">
         <li class="side_menu_title">
-            <span>Master Files</span>
+            <a href="${contextPath}/"> <span>Dashboard</span> </a>
         </li>
         <li class="">
             <a class="has-arrow" href="#" aria-expanded="false">
@@ -29,6 +29,17 @@
                 </li>
                 <li><a class="${param.childMenu == 'Holidays' ? 'mm-active' : ''}"
                        href="${contextPath}/holiday">Holiday</a>
+                </li>
+            </ul>
+        </li>
+        <li class="">
+            <a class="has-arrow" href="#" aria-expanded="false">
+
+                <img src="${contextPath}/resources/img/icon/pharma.svg" alt="" style="height: 20px;width: 20px">
+                <span>Employee</span>
+            </a>
+            <ul class="mm-collapse">
+                <li><a class="${param.childMenu == 'Employee' ? 'mm-active' : ''}" href="${contextPath}/employee">Employees</a>
                 </li>
             </ul>
         </li>
