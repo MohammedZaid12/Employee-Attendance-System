@@ -3,7 +3,6 @@ package com.company.employeeattendance.services;
 import com.company.employeeattendance.dtos.CustomAuth;
 import com.company.employeeattendance.entities.User;
 import com.company.employeeattendance.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,9 +15,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
-    @Autowired
-    private UserRepository userRepository;
+public class UserDetailsServiceImpl implements UserDetailsService, UserService {
+    private final UserRepository userRepository;
+
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -37,5 +39,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new CustomAuth(user, user.getUserName(), user.getPassword(), true, true, true, true, new ArrayList<>());
     }
 
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 
 }

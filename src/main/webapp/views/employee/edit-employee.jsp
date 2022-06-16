@@ -6,7 +6,7 @@
 </jsp:include>
 
 <%@ include file="../includes/main-menu.jsp" %>
-<title>Edit Shift</title>
+<title>Edit Employee</title>
 
 
 <section class="main_content dashboard_part">
@@ -15,79 +15,109 @@
     <div class="main_content_iner">
         <div class="container-fluid p-0">
 
-            <form:form method="POST" modelAttribute="shiftDto"
-                       action="${contextPath}/shift/saveOrUpdate">
+            <form:form method="POST" modelAttribute="employeeDto"
+                       action="${contextPath}/employee/saveOrUpdate">
                 <div class="white_box mb_30">
                     <div class="box_header">
                         <div class="main-title">
-                            <h3 class="mb-0">Edit shift</h3>
+                            <h3 class="mb-0">Edit Employee</h3>
                         </div>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
                             <div class="mb-3">
-                                <form:label path="shiftTitle">Title</form:label>
-                                <form:input type="number" path="id" hidden="true"></form:input>
-                                <form:input type="text" path="shiftTitle" class="form-control" placeholder="Title"
+                                <form:label path="user.firstName">First Name</form:label>
+                                <form:input type="text" path="user.firstName" class="form-control"
                                             required="true"
                                             autofocus="true"></form:input>
-                                <form:errors path="shiftTitle"></form:errors>
+                                <form:errors path="user.firstName"></form:errors>
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
                             <div class="mb-3">
-                                <form:label path="timeStart">Start Time</form:label>
-                                <form:input type="time" path="timeStart" class="form-control" required="true"
+                                <form:label path="user.lastName">Last Name</form:label>
+                                <form:input type="text" path="user.lastName" class="form-control" required="true"
                                             autofocus="true"></form:input>
-                                <form:errors path="timeStart"></form:errors>
+                                <form:errors path="user.lastName"></form:errors>
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
                             <div class="mb-3">
-                                <form:label path="timeEnd">End Time</form:label>
-                                <form:input type="time" path="timeEnd" class="form-control" required="true"
+                                <form:label path="user.email">Email</form:label>
+                                <form:input type="text" path="user.email" class="form-control" required="true"
                                             autofocus="true"></form:input>
-                                <form:errors path="timeEnd"></form:errors>
+                                <form:errors path="user.email"></form:errors>
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
                             <div class="mb-3">
-                                <form:label path="lateTime">Late Time</form:label>
-                                <form:input type="time" path="lateTime" class="form-control" required="true"
+                                <form:label path="user.nationalIdNumber">NIC</form:label>
+                                <form:input type="text" path="user.nationalIdNumber" class="form-control"
+                                            required="true"
                                             autofocus="true"></form:input>
-                                <form:errors path="lateTime"></form:errors>
+                                <form:errors path="user.nationalIdNumber"></form:errors>
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
                             <div class="mb-3">
-                                <form:label path="halfDayTime">Half Day Time</form:label>
-                                <form:input type="time" path="halfDayTime" class="form-control" required="true"
+                                <form:label path="user.contact">Contact</form:label>
+                                <form:input type="text" path="user.contact" class="form-control" required="true"
                                             autofocus="true"></form:input>
-                                <form:errors path="halfDayTime"></form:errors>
+                                <form:errors path="user.contact"></form:errors>
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
                             <div class="mb-3">
-                                <form:label path="lastTimeAllowed">Last Time Allowed</form:label>
-                                <form:input type="time" path="lastTimeAllowed" class="form-control" required="true"
+                                <form:label path="user.birthDate">Birth Date</form:label>
+                                <form:input type="date" path="user.birthDate" class="form-control" required="true"
                                             autofocus="true"></form:input>
-                                <form:errors path="lastTimeAllowed"></form:errors>
+                                <form:errors path="user.birthDate"></form:errors>
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
                             <div class="mb-3">
-                                <form:label path="defaultCheckIn">Default CheckIn</form:label>
-                                <form:input type="time" path="defaultCheckIn" class="form-control" required="true"
+                                <form:label path="user.address">Address</form:label>
+                                <form:input type="text" path="user.address" class="form-control" required="true"
                                             autofocus="true"></form:input>
-                                <form:errors path="defaultCheckIn"></form:errors>
+                                <form:errors path="user.address"></form:errors>
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
                             <div class="mb-3">
-                                <form:label path="defaultCheckout">Default CheckOut</form:label>
-                                <form:input type="time" path="defaultCheckout" class="form-control" required="true"
+                                <form:label path="user.gender">Gender</form:label>
+                                <form:select cssClass="form-select" path="user.gender" id="gender">
+                                    <c:forEach items="${genders}" var="gender">
+                                        <form:option value="${gender}">${gender}</form:option>
+                                    </c:forEach>
+                                </form:select>
+                                <form:errors path="user.gender"></form:errors>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
+                            <div class="mb-3">
+                                <form:label path="religion">Religion</form:label>
+                                <form:select cssClass="form-select" path="religion" id="religion">
+                                    <c:forEach items="${religions}" var="religion">
+                                        <form:option value="${religion}">${religion}</form:option>
+                                    </c:forEach>
+                                </form:select>
+                                <form:errors path="user.gender"></form:errors>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
+                            <div class="mb-3">
+                                <form:label path="joinDate">Join Date</form:label>
+                                <form:input type="date" path="joinDate" class="form-control" required="true"
                                             autofocus="true"></form:input>
-                                <form:errors path="defaultCheckout"></form:errors>
+                                <form:errors path="joinDate"></form:errors>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
+                            <div class="mb-3">
+                                <form:label path="initialSalary">Initial Salary</form:label>
+                                <form:input type="number" path="initialSalary" class="form-control" required="true"
+                                            autofocus="true"></form:input>
+                                <form:errors path="initialSalary"></form:errors>
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12" style="text-align: right">

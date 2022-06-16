@@ -8,7 +8,10 @@ import com.company.employeeattendance.entities.employee.EmployeeRule;
 import com.company.employeeattendance.entities.employee.EmployeeShift;
 import com.company.employeeattendance.enums.UserRole;
 import com.company.employeeattendance.repositories.employee.EmployeeRepository;
+import com.company.employeeattendance.services.UserService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -22,15 +25,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRuleService employeeRuleService;
     private final EmployeeShiftService employeeShiftService;
     private final EmployeeDesignationService employeeDesignationService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserService userService;
 
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeRuleService employeeRuleService,
                                EmployeeShiftService employeeShiftService,
-                               EmployeeDesignationService employeeDesignationService) {
+                               EmployeeDesignationService employeeDesignationService, BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService) {
         this.employeeRepository = employeeRepository;
         this.employeeRuleService = employeeRuleService;
         this.employeeShiftService = employeeShiftService;
         this.employeeDesignationService = employeeDesignationService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userService = userService;
     }
 
     @Override
@@ -64,7 +71,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto saveByDto(EmployeeDto employeeDto) {
         Employee employee = employeeDto.getId() == null ? new Employee() : findById(employeeDto.getId());
         BeanUtils.copyProperties(employeeDto, employee);
-        employee.getUser().setUserRole(UserRole.EMPLOYEE);
+        if (employeeDto.getId() == null) {
+            employee.setCurrentSalary(employeeDto.getInitialSalary());
+        }
+        createUser(employee);
         employee.setCurrentUser();
         Employee saved = save(employee);
         if (employeeDto.getId() == null) {
@@ -78,6 +88,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private void createEmployeeShift(Employee employee, EmployeeDto employeeDto) {
         EmployeeShift shift = new EmployeeShift();
+        shift.setCurrentUser();
         shift.setEmployee(employee);
         shift.setShift(employeeDto.getShift());
         shift.setRemarks("At Employee Creation");
@@ -88,6 +99,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private void createEmployeeRule(Employee employee, EmployeeDto employeeDto) {
         EmployeeRule employeeRule = new EmployeeRule();
+        employeeRule.setCurrentUser();
         employeeRule.setEmployee(employee);
         employeeRule.setRule(employeeDto.getRule());
         employeeRule.setRemarks("At Employee Creation");
@@ -98,11 +110,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private void createEmployeeDesignation(Employee employee, EmployeeDto employeeDto) {
         EmployeeDesignation designation = new EmployeeDesignation();
+        designation.setCurrentUser();
         designation.setEmployee(employee);
         designation.setDesignation(employeeDto.getDesignation());
         designation.setRemarks("At Employee Creation");
         designation.setStartDate(Date.valueOf(LocalDate.now()));
         designation.setStatus("active");
         employeeDesignationService.save(designation);
+    }
+
+    public void createUser(Employee employee) {
+        employee.getUser().setPassword(bCryptPasswordEncoder.encode(employee.getUser().getPassword()));
+        employee.getUser().setUserRole(UserRole.EMPLOYEE);
+        employee.getUser().setCurrentUser();
+        employee.setUser(userService.save(employee.getUser()));
     }
 }
