@@ -5,6 +5,7 @@ import com.company.employeeattendance.dtos.ShiftDto;
 import com.company.employeeattendance.entities.Shift;
 import com.company.employeeattendance.entities.Shift;
 import com.company.employeeattendance.repositories.ShiftRepository;
+import com.company.employeeattendance.utils.DateUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,10 +58,13 @@ public class ShiftServiceImpl implements ShiftService {
         shift.setHalfDayTime(setShiftTimeFormat(shiftDto.getHalfDayTime()));
         shift.setLastTimeAllowed(setShiftTimeFormat(shiftDto.getLastTimeAllowed()));
         shift.setLateTime(setShiftTimeFormat(shiftDto.getLateTime()));
+        shift.setShiftDuration(DateUtils.getDifferenceBetweenTwoTime(LocalTime.parse(shiftDto.getTimeStart(), DateFormats.HH_mm),
+                LocalTime.parse(shiftDto.getTimeEnd(), DateFormats.HH_mm)));
         Shift saved = save(shift);
         shiftDto.setId(saved.getId());
         return shiftDto;
     }
+
     private String setShiftTimeFormat(String time) {
         if (time.length() != 8 && !time.isEmpty()) {
             time = DateFormats.HH_mm_ss.format(LocalTime.parse(time, DateFormats.HH_mm));

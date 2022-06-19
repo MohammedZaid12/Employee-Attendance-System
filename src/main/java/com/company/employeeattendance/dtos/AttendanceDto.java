@@ -12,11 +12,13 @@ public class AttendanceDto {
 
     private Date attendanceDate;
 
-    private Timestamp checkIn;
+    private String checkIn;
 
-    private Timestamp checkOut;
+    private String checkOut;
 
     private Employee employee;
+
+    private Integer employeeId;
 
     private AttendanceStatus attendanceStatus;
 
@@ -40,19 +42,19 @@ public class AttendanceDto {
         this.attendanceDate = attendanceDate;
     }
 
-    public Timestamp getCheckIn() {
+    public String getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(Timestamp checkIn) {
+    public void setCheckIn(String checkIn) {
         this.checkIn = checkIn;
     }
 
-    public Timestamp getCheckOut() {
+    public String getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(Timestamp checkOut) {
+    public void setCheckOut(String checkOut) {
         this.checkOut = checkOut;
     }
 
@@ -86,5 +88,13 @@ public class AttendanceDto {
 
     public void setTotalWorkingHours(Integer totalWorkingHours) {
         this.totalWorkingHours = totalWorkingHours;
+    }
+
+    public Integer getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
     }
 }

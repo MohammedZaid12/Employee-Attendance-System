@@ -1,7 +1,6 @@
 package com.company.employeeattendance.services.employee;
 
 import com.company.employeeattendance.dtos.employee.EmployeeDto;
-import com.company.employeeattendance.entities.User;
 import com.company.employeeattendance.entities.employee.Employee;
 import com.company.employeeattendance.entities.employee.EmployeeDesignation;
 import com.company.employeeattendance.entities.employee.EmployeeRule;
@@ -10,7 +9,6 @@ import com.company.employeeattendance.enums.UserRole;
 import com.company.employeeattendance.repositories.employee.EmployeeRepository;
 import com.company.employeeattendance.services.UserService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -124,5 +122,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.getUser().setUserRole(UserRole.EMPLOYEE);
         employee.getUser().setCurrentUser();
         employee.setUser(userService.save(employee.getUser()));
+    }
+
+    @Override
+    public List<Employee> findAllByDepartmentId(Integer deptId,Date date) {
+        return employeeRepository.findAllByDepartmentId(deptId , date);
     }
 }

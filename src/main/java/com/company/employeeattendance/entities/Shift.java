@@ -41,6 +41,9 @@ public class Shift extends BaseEntity {
     @Column(name = "default_checkout")
     private String defaultCheckout;
 
+    @Column(name = "shift_duration")
+    private Integer shiftDuration; // In hours
+
     public Integer getId() {
         return id;
     }
@@ -111,5 +114,13 @@ public class Shift extends BaseEntity {
 
     public void setDefaultCheckout(String defaultCheckout) {
         this.defaultCheckout = defaultCheckout;
+    }
+
+    public Integer getShiftDuration() {
+        return shiftDuration;
+    }
+
+    public void setShiftDuration(Integer shiftDuration) {
+        this.shiftDuration = shiftDuration;
     }
 }

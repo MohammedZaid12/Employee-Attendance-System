@@ -6,11 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 @Repository
 public interface ExemptionRepository extends JpaRepository<Exemption, Integer> {
 
     @Query(value = "SELECT e FROM Exemption e WHERE e.active = :active ")
     List<Exemption> findAllActiveIs(@Param("active") boolean active);
+
+    List<Exemption> findAllByExemptionDate(Date exemptionDate);
 
 }

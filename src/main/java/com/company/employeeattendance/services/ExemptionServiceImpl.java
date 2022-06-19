@@ -6,6 +6,7 @@ import com.company.employeeattendance.repositories.ExemptionRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -48,5 +49,9 @@ public class ExemptionServiceImpl implements ExemptionService {
         Exemption saved = save(exemption);
         exemptionDto.setId(saved.getId());
         return exemptionDto;
+    }
+    @Override
+    public List<Exemption> findAllByExemptionDate(Date exemptionDate) {
+        return exemptionRepository.findAllByExemptionDate(exemptionDate);
     }
 }

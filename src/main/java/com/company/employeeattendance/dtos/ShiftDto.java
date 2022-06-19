@@ -31,6 +31,8 @@ public class ShiftDto {
     // If employee has not marked his attendance default check out will be considered
     private String defaultCheckout;
 
+    private Integer shiftDuration;
+
     public Integer getId() {
         return id;
     }
@@ -101,5 +103,13 @@ public class ShiftDto {
 
     public void setDefaultCheckout(String defaultCheckout) {
         this.defaultCheckout = defaultCheckout;
+    }
+
+    public Integer getShiftDuration() {
+        return shiftDuration;
+    }
+
+    public void setShiftDuration(Integer shiftDuration) {
+        this.shiftDuration = shiftDuration;
     }
 }

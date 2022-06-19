@@ -1,8 +1,12 @@
 package com.company.employeeattendance.utils;
 
+import org.apache.tomcat.jni.Local;
+
 import java.sql.Date;
 import java.text.DateFormatSymbols;
+import java.time.LocalTime;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,4 +37,10 @@ public class DateUtils {
     public static Period getDifferenceBetweenTwoDates(Date startDate, Date endDate) {
         return Period.between(startDate.toLocalDate(), endDate.toLocalDate());
     }
+
+    public static Integer getDifferenceBetweenTwoTime(LocalTime startTime, LocalTime endTime) {
+        Long time = startTime.until(endTime, ChronoUnit.HOURS);
+        return time.intValue() > 0 ? time.intValue() : 0;
+    }
+
 }

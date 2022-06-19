@@ -18,11 +18,11 @@ public class Attendance extends BaseEntity {
     @Column(name = "attendance_date")
     private Date attendanceDate;
 
-    @Column(name = "check_in", insertable = false, updatable = false)
-    private Timestamp checkIn;
+    @Column(name = "check_in")
+    private String checkIn;
 
     @Column(name = "check_out")
-    private Timestamp checkOut;
+    private String checkOut;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
@@ -54,19 +54,19 @@ public class Attendance extends BaseEntity {
         this.attendanceDate = attendanceDate;
     }
 
-    public Timestamp getCheckIn() {
+    public String getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(Timestamp checkIn) {
+    public void setCheckIn(String checkIn) {
         this.checkIn = checkIn;
     }
 
-    public Timestamp getCheckOut() {
+    public String getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(Timestamp checkOut) {
+    public void setCheckOut(String checkOut) {
         this.checkOut = checkOut;
     }
 

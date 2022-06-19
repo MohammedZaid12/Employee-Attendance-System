@@ -43,5 +43,17 @@
                 </li>
             </ul>
         </li>
+        <li class="">
+            <a class="has-arrow" href="#" aria-expanded="false">
+
+                <img src="${contextPath}/resources/img/icon/pharma.svg" alt="" style="height: 20px;width: 20px">
+                <span>Attendance</span>
+            </a>
+            <ul class="mm-collapse">
+                <li><a class="${param.childMenu == 'Employee' ? 'mm-active' : ''}" href="${contextPath}/attendance/mark-attendance">Mark
+                    Attendance</a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </nav>

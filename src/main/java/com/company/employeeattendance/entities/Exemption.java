@@ -5,6 +5,7 @@ import com.company.employeeattendance.entities.employee.Employee;
 import com.company.employeeattendance.enums.ExemptionType;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -22,9 +23,6 @@ public class Exemption extends BaseEntity {
     @Column(name = "reason")
     private String reason;
 
-    @Column(name = "count")
-    private int count;
-
     @Column(name = "month")
     private String month;
 
@@ -32,8 +30,7 @@ public class Exemption extends BaseEntity {
     private int year;
 
     @Column(name = "exemption_date")
-    @Convert(converter = StringListConverter.class)
-    private List<String> exemptionDates;
+    private Date exemptionDate;
 
     @Column(name = "exemption_type")
     @Enumerated(value = EnumType.STRING)
@@ -63,14 +60,6 @@ public class Exemption extends BaseEntity {
         this.reason = reason;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     public String getMonth() {
         return month;
     }
@@ -87,13 +76,6 @@ public class Exemption extends BaseEntity {
         this.year = year;
     }
 
-    public List<String> getExemptionDates() {
-        return exemptionDates;
-    }
-
-    public void setExemptionDates(List<String> exemptionDates) {
-        this.exemptionDates = exemptionDates;
-    }
 
     public ExemptionType getExemptionType() {
         return exemptionType;
@@ -101,5 +83,13 @@ public class Exemption extends BaseEntity {
 
     public void setExemptionType(ExemptionType exemptionType) {
         this.exemptionType = exemptionType;
+    }
+
+    public Date getExemptionDate() {
+        return exemptionDate;
+    }
+
+    public void setExemptionDate(Date exemptionDate) {
+        this.exemptionDate = exemptionDate;
     }
 }
