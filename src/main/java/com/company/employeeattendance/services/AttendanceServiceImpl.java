@@ -2,6 +2,7 @@ package com.company.employeeattendance.services;
 
 import com.company.employeeattendance.constants.DateFormats;
 import com.company.employeeattendance.dtos.AttendanceDto;
+import com.company.employeeattendance.dtos.AttendanceReportModel;
 import com.company.employeeattendance.dtos.MasterAttendanceList;
 import com.company.employeeattendance.entities.Attendance;
 import com.company.employeeattendance.entities.Exemption;
@@ -11,6 +12,7 @@ import com.company.employeeattendance.entities.employee.EmployeeRule;
 import com.company.employeeattendance.entities.employee.EmployeeShift;
 import com.company.employeeattendance.enums.AttendanceStatus;
 import com.company.employeeattendance.repositories.AttendanceRepository;
+import com.company.employeeattendance.services.employee.EmployeeDesignationService;
 import com.company.employeeattendance.services.employee.EmployeeRuleService;
 import com.company.employeeattendance.services.employee.EmployeeService;
 import com.company.employeeattendance.services.employee.EmployeeShiftService;
@@ -19,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +36,16 @@ public class AttendanceServiceImpl implements AttendanceService {
     private final EmployeeShiftService employeeShiftService;
     private final EmployeeRuleService employeeRuleService;
     private final ExemptionService exemptionService;
+    private final EmployeeDesignationService employeeDesignationService;
 
     public AttendanceServiceImpl(AttendanceRepository attendanceRepository, EmployeeService employeeService, EmployeeShiftService employeeShiftService,
-                                 EmployeeRuleService employeeRuleService, ExemptionService exemptionService) {
+                                 EmployeeRuleService employeeRuleService, ExemptionService exemptionService, EmployeeDesignationService employeeDesignationService) {
         this.attendanceRepository = attendanceRepository;
         this.employeeService = employeeService;
         this.employeeRuleService = employeeRuleService;
         this.employeeShiftService = employeeShiftService;
         this.exemptionService = exemptionService;
+        this.employeeDesignationService = employeeDesignationService;
     }
 
     @Override
@@ -184,4 +189,36 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendance.setCheckOut(checkOut.format(DateFormats.HH_mm));
     }
 
+    @Override
+    public List<AttendanceReportModel> generateAttendanceReport(Integer deptId, String month, Integer year, Integer employeeId,
+                                                                Date startDate, Date endDate) {
+        List<AttendanceReportModel> attendanceReportModelList = new ArrayList<>();
+        LocalDate currentDate = LocalDate.now();
+        List<Employee> employees = employeeService.findAllByDepartmentId(deptId, employeeId, startDate);
+        List<LocalDate> monthDates = DateUtils.getDatesBetween(startDate.toLocalDate(),
+                endDate.toLocalDate());
+        for (Employee employee : employees) {
+            AttendanceReportModel attendanceReportModel = new AttendanceReportModel();
+            List<AttendanceDto> attendanceDtoList = new ArrayList<>();
+            for (LocalDate monthDate : monthDates.stream().sorted().collect(Collectors.toList())) {
+                AttendanceDto attendanceDto = new AttendanceDto();
+                Attendance attendance = attendanceRepository.findByEmployeeIdAndAttendanceDate(employee.getId(), Date.valueOf(monthDate));
+                if (attendance == null) {
+                    if (monthDate.isBefore(currentDate) || monthDate.isEqual(currentDate)) {
+                        attendanceDto.setAttendanceStatus(AttendanceStatus.ABSENT);
+                    } else {
+                        attendanceDto.setAttendanceStatus(AttendanceStatus.NONE);
+                    }
+                } else {
+                    BeanUtils.copyProperties(attendance, attendanceDto);
+                }
+                attendanceDtoList.add(attendanceDto);
+            }
+            attendanceReportModel.setEmployee(employee);
+            attendanceReportModel.setAttendanceDtoList(attendanceDtoList);
+            attendanceReportModel.setDesignation(employeeDesignationService.findByEmployeeIdAndDate(employee.getId(), startDate).getDesignation());
+            attendanceReportModelList.add(attendanceReportModel);
+        }
+        return attendanceReportModelList;
+    }
 }

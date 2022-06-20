@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -125,7 +126,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> findAllByDepartmentId(Integer deptId,Date date) {
-        return employeeRepository.findAllByDepartmentId(deptId , date);
+    public List<Employee> findAllByDepartmentId(Integer deptId, Date date) {
+        return employeeRepository.findAllByDepartmentId(deptId, date);
+    }
+
+    @Override
+    public List<Employee> findAllByDepartmentId(Integer deptId, Integer employeeId,
+                                                Date startDate) {
+        if (employeeId > 0) {
+            return Arrays.asList(findById(employeeId));
+        } else {
+            return employeeRepository.findAllByDepartmentId(deptId, startDate);
+        }
     }
 }

@@ -50,8 +50,12 @@
                 <span>Attendance</span>
             </a>
             <ul class="mm-collapse">
-                <li><a class="${param.childMenu == 'Employee' ? 'mm-active' : ''}" href="${contextPath}/attendance/mark-attendance">Mark
+                <li><a class="${param.childMenu == 'Employee' ? 'mm-active' : ''}"
+                       href="${contextPath}/attendance/mark-attendance">Mark
                     Attendance</a>
+                </li>
+                <li><a class="${param.childMenu == 'Employee' ? 'mm-active' : ''}"
+                       href="${contextPath}/attendance/department-wise-report">Attendance Report</a>
                 </li>
             </ul>
         </li>

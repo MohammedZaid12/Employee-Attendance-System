@@ -36,7 +36,7 @@
                         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
                             <div class="mb-3">
                                 <form:label path="department">Department</form:label>
-                                <form:select cssClass="form-control" path="department">
+                                <form:select cssClass="form-select" path="department">
                                     <c:forEach items="${departments}" var="dep">
                                         <form:option value="${dep.id}">${dep.name}</form:option>
                                     </c:forEach>

@@ -11,4 +11,7 @@ public interface EmployeeService extends BaseService<Employee, EmployeeDto> {
 
 
     List<Employee> findAllByDepartmentId(Integer deptId, Date date);
+
+    List<Employee> findAllByDepartmentId(Integer deptId, Integer employeeId,
+                                         Date startDate);
 }

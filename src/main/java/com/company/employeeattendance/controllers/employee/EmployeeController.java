@@ -11,10 +11,11 @@ import com.company.employeeattendance.services.ShiftService;
 import com.company.employeeattendance.services.employee.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/employee")
@@ -68,5 +69,17 @@ public class EmployeeController extends BaseController<Employee, EmployeeDto> {
     public String saveOrUpdate(@ModelAttribute("employee") EmployeeDto employee, Model model) {
         employeeService.saveByDto(employee);
         return "redirect:/employee";
+    }
+
+    @GetMapping(value = "/generate-list-for-dropdown")
+    @ResponseBody
+    public Map<Integer, String> generateEmployeeList(@RequestParam("deptId") Integer deptId,
+                                                     @RequestParam("month") String month, @RequestParam("year") Integer year,
+                                                     @RequestParam("startDate") Date startDate, @RequestParam("endDate") Date endDate) {
+        Map<Integer, String> employeeMap = new HashMap<>();
+        for (Employee employee : employeeService.findAllByDepartmentId(deptId, startDate)) {
+            employeeMap.put(employee.getId(), employee.getUser().getFullName());
+        }
+        return employeeMap;
     }
 }

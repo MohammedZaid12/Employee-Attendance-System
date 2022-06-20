@@ -32,7 +32,7 @@
                         </li>
                     </div>
                     <div class="profile_info">
-                        <img src="${contextPath}/resources/img/client_img.png" alt="#">
+                        <img src="${contextPath}/resources/img/staf/2.png" alt="#">
                         <div class="profile_info_iner">
                             <p>Neurologist </p>
                             <h5>Dr. Robar Smith</h5>

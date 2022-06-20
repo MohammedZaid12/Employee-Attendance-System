@@ -82,4 +82,32 @@ public class AttendanceController extends BaseController<Attendance, AttendanceD
         model.addAttribute("attendance", attendanceService.saveAttendance(masterAttendanceList));
         return "redirect:/attendance/mark-attendance";
     }
+
+    @GetMapping(value = "/department-wise-report")
+    public String departmentWiseReport(Model model) {
+        model.addAttribute("departments", departmentService.findAll());
+        model.addAttribute("months", DateUtils.getMonths());
+        model.addAttribute("years", DateUtils.getYearListFromYear(LocalDate.now().getYear()));
+        model.addAttribute("reportTable", false);
+        return "attendance/department-wise-report";
+    }
+
+    @PostMapping(value = "/department-wise-report")
+    public String departmentWiseReportPost(Model model, @RequestParam("deptId") Integer deptId, @RequestParam("employeeId") Integer employeeId,
+                                           @RequestParam("month") String month, @RequestParam("year") Integer year,
+                                           @RequestParam("startDate") Date startDate, @RequestParam("endDate") Date endDate) {
+        model.addAttribute("departments", departmentService.findAll());
+        model.addAttribute("months", DateUtils.getMonths());
+        model.addAttribute("years", DateUtils.getYearListFromYear(LocalDate.now().getYear()));
+        model.addAttribute("reportTable", true);
+        model.addAttribute("selectedDept", deptId);
+        model.addAttribute("selectedMonth", month);
+        model.addAttribute("selectedYear", year);
+        model.addAttribute("selectedStartDate", startDate);
+        model.addAttribute("selectedEndDate", endDate);
+        model.addAttribute("currentEmployee", employeeId);
+        model.addAttribute("monthDates", DateUtils.getDatesBetween(startDate.toLocalDate(), endDate.toLocalDate()));
+        model.addAttribute("attendanceReportModelList", attendanceService.generateAttendanceReport(deptId, month, year, employeeId, startDate, endDate));
+        return "attendance/department-wise-report";
+    }
 }

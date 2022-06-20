@@ -4,6 +4,7 @@ import org.apache.tomcat.jni.Local;
 
 import java.sql.Date;
 import java.text.DateFormatSymbols;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DateUtils {
 
@@ -41,6 +43,14 @@ public class DateUtils {
     public static Integer getDifferenceBetweenTwoTime(LocalTime startTime, LocalTime endTime) {
         Long time = startTime.until(endTime, ChronoUnit.HOURS);
         return time.intValue() > 0 ? time.intValue() : 0;
+    }
+    public static List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(endDate)) {
+            return new ArrayList<>();
+        } else {
+            return Stream.iterate(startDate, date -> date.plusDays(1)).limit(ChronoUnit.DAYS.between(startDate, endDate.plusDays(1))).collect(Collectors.toList());
+        }
+
     }
 
 }
